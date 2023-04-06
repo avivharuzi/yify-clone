@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 import { AppHeader } from '../components';
 
@@ -9,7 +9,9 @@ export function RootLayout() {
     <>
       <AppHeader />
       <Container maxWidth="xl">
-        <Outlet />
+        <Box py={4}>
+          <Outlet />
+        </Box>
       </Container>
     </>
   );
