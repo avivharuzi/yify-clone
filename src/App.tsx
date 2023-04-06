@@ -1,5 +1,18 @@
-function App() {
-  return <div className="App"></div>;
-}
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-export default App;
+import { RootLayout } from './layouts';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <RootLayout />,
+  },
+]);
+
+export function App() {
+  return (
+    <div className="App">
+      <RouterProvider router={router} />
+    </div>
+  );
+}
