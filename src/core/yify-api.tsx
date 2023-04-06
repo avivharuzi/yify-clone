@@ -24,13 +24,13 @@ export interface YifyApiMovieListQueryParams {
 }
 
 export interface YifyApiMovieDetailsQueryParams {
-  movie_id: string | undefined;
+  movie_id: string;
   with_images: boolean;
   with_cast: boolean;
 }
 
 export interface YifyApiMovieSuggestionsQueryParams {
-  movie_id: string | undefined;
+  movie_id: string;
 }
 
 export interface YifyApiMovieListResponse {
