@@ -12,6 +12,27 @@ export interface YifyApiBaseResponseMeta {
   execution_time: string;
 }
 
+export interface YifyApiMovieListQueryParams {
+  limit: number;
+  page: number;
+  quality: string;
+  minimum_rating: number;
+  query_term: string;
+  genre: string;
+  sort_by: string;
+  order_by: string;
+}
+
+export interface YifyApiMovieDetailsQueryParams {
+  movie_id: string | undefined;
+  with_images: boolean;
+  with_cast: boolean;
+}
+
+export interface YifyApiMovieSuggestionsQueryParams {
+  movie_id: string | undefined;
+}
+
 export interface YifyApiMovieListResponse {
   movie_count: number;
   limit: number;
