@@ -19,7 +19,7 @@ export const getPagePaths = (): PagePaths => {
     },
     movieDetails: {
       static: MOVIE_DETAILS_PATH,
-      dynamic: ({ movieId }) => `${MOVIE_DETAILS_PATH}/${movieId}`,
+      dynamic: ({ movieId }) => `${BROWSE_MOVIES_PATH}/${movieId}`,
     },
   };
 };
