@@ -34,7 +34,7 @@ export const useYifyApiMovieList = (
 
   if (data) {
     const moviesData = data.data;
-    movies = moviesData.movies;
+    movies = moviesData.movies || [];
     pageCount = Math.ceil(moviesData.movie_count / moviesData.limit);
   } else {
     movies = [];

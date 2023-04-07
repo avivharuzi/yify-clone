@@ -37,7 +37,7 @@ export interface YifyApiMovieListResponse {
   movie_count: number;
   limit: number;
   page_number: number;
-  movies: YifyApiMovie[];
+  movies?: YifyApiMovie[];
 }
 
 export interface YifyApiMovieDetailsResponse {
