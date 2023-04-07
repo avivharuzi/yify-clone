@@ -16,7 +16,7 @@ export interface YifyApiMovieListQueryParams {
   limit: number;
   page: number;
   quality: string;
-  minimum_rating: number;
+  minimum_rating: string;
   query_term: string;
   genre: string;
   sort_by: string;
@@ -134,6 +134,18 @@ export interface YifyApiMovieTorrent {
   date_uploaded_unix: number;
 }
 
+export interface YifyApiSortByOption {
+  id: string;
+  label: string;
+  value: Partial<Pick<YifyApiMovieListQueryParams, 'order_by' | 'sort_by'>>;
+}
+
+export interface YifyApiQualityOption {
+  id: string;
+  label: string;
+  value: string;
+}
+
 export const YIFY_API_BASE_URL = 'https://yts.mx/api/v2';
 
 export const YIFY_API_MOVIE_LIST_URL = `${YIFY_API_BASE_URL}/list_movies.json`;
@@ -141,6 +153,199 @@ export const YIFY_API_MOVIE_LIST_URL = `${YIFY_API_BASE_URL}/list_movies.json`;
 export const YIFY_API_MOVIE_DETAILS_URL = `${YIFY_API_BASE_URL}/movie_details.json`;
 
 export const YIFY_API_MOVIE_SUGGESTIONS_URL = `${YIFY_API_BASE_URL}/movie_suggestions.json`;
+
+export const getYifyApiMovieQualities = (): string[] => [
+  'All',
+  '720p',
+  '1080p',
+  '2160p',
+  '3D',
+];
+
+export const getYifyApiMovieGenres = (): string[] => [
+  'All',
+  'Action',
+  'Adventure',
+  'Animation',
+  'Biography',
+  'Comedy',
+  'Crime',
+  'Documentary',
+  'Drama',
+  'Family',
+  'Fantasy',
+  'Film-Noir',
+  'Game-Show',
+  'History',
+  'Horror',
+  'Music',
+  'Musical',
+  'Mystery',
+  'News',
+  'Reality-TV',
+  'Romance',
+  'Sci-Fi',
+  'Sport',
+  'Talk-Show',
+  'Thriller',
+  'War',
+  'Western',
+];
+
+export const YIFY_API_MAX_RATING = 9;
+
+export const getYifyApiMovieRatings = (): YifyApiQualityOption[] => {
+  const ratings = [
+    {
+      id: 'rating_all',
+      label: 'All',
+      value: 'All',
+    },
+  ];
+
+  for (let i = 0; i < YIFY_API_MAX_RATING; i++) {
+    const rating = Math.abs(i - YIFY_API_MAX_RATING).toString();
+
+    ratings.push({
+      id: `rating_${rating}`,
+      label: `${rating}+`,
+      value: rating,
+    });
+  }
+
+  return ratings;
+};
+
+export const getYifySortByOptions = (): YifyApiSortByOption[] => [
+  {
+    id: 'date_added',
+    label: 'Date Added',
+    value: {
+      order_by: 'desc',
+      sort_by: 'date_added',
+    },
+  },
+  {
+    id: 'date_added_oldest',
+    label: 'Date Added (Oldest First)',
+    value: {
+      order_by: 'asc',
+      sort_by: 'date_added',
+    },
+  },
+  {
+    id: 'title',
+    label: 'Year',
+    value: {
+      order_by: 'desc',
+      sort_by: 'year',
+    },
+  },
+  {
+    id: 'title_oldest',
+    label: 'Year (Oldest First)',
+    value: {
+      order_by: 'asc',
+      sort_by: 'year',
+    },
+  },
+  {
+    id: 'rating',
+    label: 'Rating',
+    value: {
+      order_by: 'desc',
+      sort_by: 'rating',
+    },
+  },
+  {
+    id: 'rating_lowest',
+    label: 'Rating (Lowest First)',
+    value: {
+      order_by: 'asc',
+      sort_by: 'rating',
+    },
+  },
+  {
+    id: 'likes',
+    label: 'Likes',
+    value: {
+      order_by: 'desc',
+      sort_by: 'like_count',
+    },
+  },
+  {
+    id: 'likes_lowest',
+    label: 'Likes (Lowest First)',
+    value: {
+      order_by: 'asc',
+      sort_by: 'like_count',
+    },
+  },
+  {
+    id: 'alphabetical',
+    label: 'Alphabetical',
+    value: {
+      order_by: 'asc',
+      sort_by: 'title',
+    },
+  },
+  {
+    id: 'alphabetical_z',
+    label: 'Alphabetical (Z-A)',
+    value: {
+      order_by: 'desc',
+      sort_by: 'title',
+    },
+  },
+  {
+    id: 'download_count',
+    label: 'Download Count',
+    value: {
+      order_by: 'desc',
+      sort_by: 'download_count',
+    },
+  },
+  {
+    id: 'download_count_lowest',
+    label: 'Download Count (Lowest First)',
+    value: {
+      order_by: 'asc',
+      sort_by: 'download_count',
+    },
+  },
+  {
+    id: 'peers',
+    label: 'Peers',
+    value: {
+      order_by: 'desc',
+      sort_by: 'peers',
+    },
+  },
+  {
+    id: 'peers_lowest',
+    label: 'Peers (Lowest First)',
+    value: {
+      order_by: 'asc',
+      sort_by: 'peers',
+    },
+  },
+  {
+    id: 'seeds',
+    label: 'Seeds',
+    value: {
+      order_by: 'desc',
+      sort_by: 'seeds',
+    },
+  },
+  {
+    id: 'seeds_lowest',
+    label: 'Seeds (Lowest First)',
+    value: {
+      order_by: 'asc',
+      sort_by: 'seeds',
+    },
+  },
+];
 
 export const getYifyApiTrackers = (): string[] => [
   'udp://open.demonii.com:1337/announce',
