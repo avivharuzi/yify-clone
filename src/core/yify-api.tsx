@@ -141,3 +141,26 @@ export const YIFY_API_MOVIE_LIST_URL = `${YIFY_API_BASE_URL}/list_movies.json`;
 export const YIFY_API_MOVIE_DETAILS_URL = `${YIFY_API_BASE_URL}/movie_details.json`;
 
 export const YIFY_API_MOVIE_SUGGESTIONS_URL = `${YIFY_API_BASE_URL}/movie_suggestions.json`;
+
+export const getYifyApiTrackers = (): string[] => [
+  'udp://open.demonii.com:1337/announce',
+  'udp://tracker.openbittorrent.com:80',
+  'udp://tracker.coppersurfer.tk:6969',
+  'udp://glotorrents.pw:6969/announce',
+  'udp://tracker.opentrackr.org:1337/announce',
+  'udp://torrent.gresille.org:80/announce',
+  'udp://p4p.arenabg.com:1337',
+  'udp://tracker.leechers-paradise.org:6969',
+];
+
+export const getYifyApiMagnetUrl = ({
+  hash,
+  url,
+}: YifyApiMovieTorrent): string => {
+  const encodedUrl = encodeURIComponent(url);
+  const trackers = getYifyApiTrackers()
+    .map((tracker) => `&tr=${encodeURIComponent(tracker)}`)
+    .join('');
+
+  return `magnet:?xt=urn:btih:${hash}&dn=${encodedUrl}${trackers}`;
+};
