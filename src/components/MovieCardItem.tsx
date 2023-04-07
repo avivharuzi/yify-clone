@@ -1,34 +1,41 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import DownloadIcon from '@mui/icons-material/Download';
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
+  CardActions,
   CardContent,
   Chip,
   Typography,
 } from '@mui/material';
 
 import { getPagePaths, YifyApiMovie } from '../core';
+import { MovieDownloadDialog } from './MovieDownloadDialog';
 
 export interface MovieCardItemProps {
   movie: YifyApiMovie;
 }
 
 export function MovieCardItem({ movie }: MovieCardItemProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   const pagePaths = getPagePaths();
 
   return (
-    <Link
-      style={{
-        all: 'unset',
-      }}
-      to={pagePaths.movieDetails.dynamic({
-        movieId: movie.id.toString(),
-      })}
-    >
-      <Card>
-        <CardActionArea>
+    <Card>
+      <CardActionArea>
+        <Link
+          style={{
+            all: 'unset',
+          }}
+          to={pagePaths.movieDetails.dynamic({
+            movieId: movie.id.toString(),
+          })}
+        >
           <img width="100%" alt={movie.title} src={movie.medium_cover_image} />
           <CardContent>
             <Typography
@@ -42,23 +49,29 @@ export function MovieCardItem({ movie }: MovieCardItemProps) {
                 ({movie.year})
               </Typography>
             </Typography>
-            <Box onClick={(e) => e.stopPropagation()} display="flex" gap={1}>
-              {movie.torrents.map((torrent) => {
-                return (
-                  <Chip
-                    key={torrent.hash}
-                    label={torrent.quality}
-                    component="a"
-                    href={torrent.url}
-                    target="_blank"
-                    clickable
-                  />
-                );
-              })}
+            <Box display="flex" gap={0.5} flexWrap="wrap">
+              {movie.genres.map((genre) => (
+                <Chip size="small" key={genre} label={genre} />
+              ))}
             </Box>
           </CardContent>
-        </CardActionArea>
-      </Card>
-    </Link>
+        </Link>
+      </CardActionArea>
+      <CardActions>
+        <Button
+          startIcon={<DownloadIcon />}
+          onClick={() => setIsOpen(true)}
+          size="small"
+          color="primary"
+        >
+          Download
+        </Button>
+        <MovieDownloadDialog
+          isOpen={isOpen}
+          torrents={movie.torrents}
+          onClose={() => setIsOpen(false)}
+        />
+      </CardActions>
+    </Card>
   );
 }
