@@ -10,7 +10,7 @@ export type PagePaths = {
 
 export const getPagePaths = (): PagePaths => {
   const BROWSE_MOVIES_PATH = '/browse-movies';
-  const MOVIE_DETAILS_PATH = '/browse-movies/:movieId';
+  const MOVIE_DETAILS_PATH = '/movies/:movieId';
 
   return {
     browseMovies: {
@@ -19,7 +19,7 @@ export const getPagePaths = (): PagePaths => {
     },
     movieDetails: {
       static: MOVIE_DETAILS_PATH,
-      dynamic: ({ movieId }) => `${BROWSE_MOVIES_PATH}/${movieId}`,
+      dynamic: ({ movieId }) => `/movies/${movieId}`,
     },
   };
 };
