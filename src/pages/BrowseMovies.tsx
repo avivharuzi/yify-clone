@@ -1,19 +1,71 @@
-import useSWR from 'swr';
+import { useState } from 'react';
 
-import { MovieCardList } from '../components';
-import {
-  YIFY_API_MOVIE_LIST_URL,
-  YifyApiBaseResponse,
-  YifyApiMovieListResponse,
-} from '../core';
-import { fetcher } from '../utils';
+import { Pagination, Stack } from '@mui/material';
+
+import { BrowseMoviesForm, MovieCardList } from '../components';
+import { useYifyApiMovieList, YifyApiMovieListQueryParams } from '../core';
 
 export function Component() {
-  const { data: moviesData } = useSWR<
-    YifyApiBaseResponse<YifyApiMovieListResponse>
-  >(YIFY_API_MOVIE_LIST_URL, fetcher);
+  const [queryParams, setQueryParams] = useState<
+    Partial<YifyApiMovieListQueryParams>
+  >({
+    page: 1,
+  });
 
-  const movies = moviesData?.data?.movies ?? [];
+  const { movies, pageCount } = useYifyApiMovieList(queryParams);
 
-  return <MovieCardList movies={movies} />;
+  const pagination = (
+    <Pagination
+      color="primary"
+      size="large"
+      count={pageCount}
+      page={queryParams.page || 1}
+      onChange={(_, page) =>
+        setQueryParams((qp) => {
+          return {
+            ...qp,
+            page,
+          };
+        })
+      }
+    />
+  );
+
+  const handleBrowseMoviesFormChange = (
+    values: Partial<YifyApiMovieListQueryParams>
+  ) => {
+    setQueryParams((qp) => {
+      const updatedQP = {
+        ...qp,
+        ...values,
+        page: 1,
+      };
+
+      Object.entries(updatedQP).forEach(([key, value]) => {
+        if (value === '') {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          delete updatedQP[key];
+        } else if (value === 'All') {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          delete updatedQP[key];
+        }
+      });
+
+      return updatedQP;
+    });
+  };
+
+  return (
+    <Stack spacing={2} alignItems="center">
+      <BrowseMoviesForm onChange={handleBrowseMoviesFormChange} />
+
+      {pagination}
+
+      <MovieCardList movies={movies} />
+
+      {pagination}
+    </Stack>
+  );
 }

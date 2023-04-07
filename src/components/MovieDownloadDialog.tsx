@@ -36,7 +36,7 @@ export function MovieDownloadDialog({
   onClose,
 }: MovieDownloadDialogProps) {
   return (
-    <Dialog fullWidth={true} maxWidth="md" onClose={onClose} open={isOpen}>
+    <Dialog fullWidth maxWidth="md" onClose={onClose} open={isOpen}>
       <DialogTitle
         sx={{
           p: 4,
