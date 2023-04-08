@@ -45,7 +45,7 @@ export function MovieCardItem({ movie }: MovieCardItemProps) {
               fontWeight={500}
             >
               {movie.title}{' '}
-              <Typography fontWeight={500} color="gray" component="span">
+              <Typography fontWeight={500} color="grey" component="span">
                 ({movie.year})
               </Typography>
             </Typography>

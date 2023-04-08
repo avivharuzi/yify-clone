@@ -79,7 +79,7 @@ export function MovieDownloadDialog({
                     variant="h6"
                     fontWeight="500"
                     component="span"
-                    color="green"
+                    color="success.main"
                   >
                     {torrent.seeds}
                   </Typography>
@@ -90,7 +90,7 @@ export function MovieDownloadDialog({
                     variant="h6"
                     fontWeight="500"
                     component="span"
-                    color="red"
+                    color="error.main"
                   >
                     {torrent.peers}
                   </Typography>
