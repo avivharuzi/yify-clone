@@ -102,6 +102,7 @@ export function MovieDownloadDialog({
                   component="a"
                   href={torrent.url}
                   target="_blank"
+                  rel="noreferrer"
                 >
                   Download
                 </Button>
@@ -109,6 +110,7 @@ export function MovieDownloadDialog({
                   href={getYifyApiMagnetUrl(torrent)}
                   component="a"
                   size="large"
+                  rel="noreferrer"
                 >
                   <MagnetIcon />
                 </IconButton>

@@ -1,12 +1,14 @@
 import {
   Avatar,
+  ButtonBase,
+  Link,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
 } from '@mui/material';
 
-import { YifyApiMovieCastPerson } from '../core';
+import { getImdbCharacterUrl, YifyApiMovieCastPerson } from '../core';
 
 export interface MovieCastListProps {
   cast: YifyApiMovieCastPerson[];
@@ -19,7 +21,15 @@ export function MovieCastList({ cast }: MovieCastListProps) {
         return (
           <ListItem key={person.imdb_code}>
             <ListItemAvatar>
-              <Avatar alt={person.name} src={person.url_small_image} />
+              <Link
+                href={getImdbCharacterUrl(person.imdb_code)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <ButtonBase>
+                  <Avatar alt={person.name} src={person.url_small_image} />
+                </ButtonBase>
+              </Link>
             </ListItemAvatar>
             <ListItemText
               primary={person.name}
