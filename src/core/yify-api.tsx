@@ -108,7 +108,7 @@ export interface YifyApiMovieDetails {
   large_screenshot_image1: string;
   large_screenshot_image2: string;
   large_screenshot_image3: string;
-  cast: YifyApiMovieCastPerson[];
+  cast?: YifyApiMovieCastPerson[];
   torrents: YifyApiMovieTorrent[];
   date_uploaded: string;
   date_uploaded_unix: number;
