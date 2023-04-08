@@ -2,6 +2,8 @@ export * from './icons';
 
 export * from './AppHeader';
 
+export * from './BackButton';
+
 export * from './BrowseMoviesForm';
 
 export * from './Image';
@@ -16,4 +18,8 @@ export * from './MovieDownload';
 
 export * from './MovieDownloadDialog';
 
+export * from './SimilarMovies';
+
 export * from './YoutubeDialog';
+
+export * from './YoutubeTrailer';
