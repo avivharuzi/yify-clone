@@ -4,7 +4,6 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
-import { AppThemeProvider } from './AppThemeProvider';
 import { getPagePaths } from './core';
 import { RootLayout } from './layouts';
 
@@ -42,9 +41,7 @@ const router = createBrowserRouter([
 export function App() {
   return (
     <div className="App">
-      <AppThemeProvider>
-        <RouterProvider router={router} />
-      </AppThemeProvider>
+      <RouterProvider router={router} />
     </div>
   );
 }

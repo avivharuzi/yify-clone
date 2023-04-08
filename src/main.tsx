@@ -8,11 +8,14 @@ import '@fontsource/roboto/700.css';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import { App } from './App';
+import { AppThemeProvider } from './AppThemeProvider';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <CssBaseline />
-    <App />
+    <AppThemeProvider>
+      <CssBaseline />
+      <App />
+    </AppThemeProvider>
   </React.StrictMode>
 );
