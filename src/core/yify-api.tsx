@@ -23,6 +23,8 @@ export interface YifyApiMovieListQueryParams {
   order_by: string;
 }
 
+export type YifyApiMovieListQueryParamsKeys = keyof YifyApiMovieListQueryParams;
+
 export interface YifyApiMovieDetailsQueryParams {
   movie_id: string;
   with_images: boolean;
@@ -368,4 +370,33 @@ export const getYifyApiMagnetUrl = ({
     .join('');
 
   return `magnet:?xt=urn:btih:${hash}&dn=${encodedUrl}${trackers}`;
+};
+
+export const getYifyApiMovieListQueryParamsKeys =
+  (): YifyApiMovieListQueryParamsKeys[] => {
+    return [
+      'page',
+      'quality',
+      'minimum_rating',
+      'query_term',
+      'genre',
+      'sort_by',
+      'order_by',
+    ];
+  };
+
+export const cleanYifyApiMovieListQueryParams = (
+  queryParams: Partial<YifyApiMovieListQueryParams>
+): Partial<YifyApiMovieListQueryParams> => {
+  const cleanedQueryParams = { ...queryParams };
+
+  Object.entries(cleanedQueryParams).forEach(([k, value]) => {
+    const key = k as keyof YifyApiMovieListQueryParams;
+
+    if (value === '' || value === 'All') {
+      delete cleanedQueryParams[key];
+    }
+  });
+
+  return cleanedQueryParams;
 };
