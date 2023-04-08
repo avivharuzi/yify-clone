@@ -1,10 +1,7 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import DownloadIcon from '@mui/icons-material/Download';
 import {
   Box,
-  Button,
   Card,
   CardActionArea,
   CardActions,
@@ -14,15 +11,13 @@ import {
 } from '@mui/material';
 
 import { getPagePaths, YifyApiMovie } from '../core';
-import { MovieDownloadDialog } from './MovieDownloadDialog';
+import { MovieDownload } from './MovieDownload';
 
 export interface MovieCardItemProps {
   movie: YifyApiMovie;
 }
 
 export function MovieCardItem({ movie }: MovieCardItemProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
   const pagePaths = getPagePaths();
 
   return (
@@ -58,19 +53,7 @@ export function MovieCardItem({ movie }: MovieCardItemProps) {
         </Link>
       </CardActionArea>
       <CardActions>
-        <Button
-          startIcon={<DownloadIcon />}
-          onClick={() => setIsOpen(true)}
-          size="small"
-          color="primary"
-        >
-          Download
-        </Button>
-        <MovieDownloadDialog
-          isOpen={isOpen}
-          torrents={movie.torrents}
-          onClose={() => setIsOpen(false)}
-        />
+        <MovieDownload torrents={movie.torrents} />
       </CardActions>
     </Card>
   );
