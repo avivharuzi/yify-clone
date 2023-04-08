@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Pagination, Stack } from '@mui/material';
+import { Box, Pagination } from '@mui/material';
 
 import { BrowseMoviesForm, MovieCardList } from '../components';
 import { useYifyApiMovieList, YifyApiMovieListQueryParams } from '../core';
@@ -58,7 +58,7 @@ export function Component() {
   };
 
   return (
-    <Stack spacing={2} alignItems="center">
+    <Box display="flex" flexDirection="column" alignItems="center" gap={6}>
       <BrowseMoviesForm onChange={handleBrowseMoviesFormChange} />
 
       {pagination}
@@ -66,6 +66,6 @@ export function Component() {
       <MovieCardList movies={movies} />
 
       {pagination}
-    </Stack>
+    </Box>
   );
 }
