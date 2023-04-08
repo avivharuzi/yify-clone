@@ -12,19 +12,30 @@ import {
 } from '../core';
 
 export interface BrowseMoviesFormProps {
+  defaultValues?: Partial<YifyApiMovieListQueryParams>;
   onChange: (values: Partial<YifyApiMovieListQueryParams>) => void;
 }
 
 const BROWSE_MOVIES_FORM_DEBOUNCE_TIMEOUT = 300;
 
-export const BrowseMoviesForm = ({ onChange }: BrowseMoviesFormProps) => {
+export const BrowseMoviesForm = ({
+  defaultValues = {},
+  onChange,
+}: BrowseMoviesFormProps) => {
+  const sortByOptionId = getYifySortByOptions().find((option) => {
+    return (
+      option.value.sort_by === defaultValues?.sort_by &&
+      option.value.order_by === defaultValues?.order_by
+    );
+  });
+
   const formik = useFormik({
     initialValues: {
-      query_term: '',
-      quality: 'All',
-      genre: 'All',
-      minimum_rating: 'All',
-      sortByOptionId: 'date_added',
+      query_term: defaultValues?.query_term || '',
+      quality: defaultValues?.quality || 'All',
+      genre: defaultValues?.genre || 'All',
+      minimum_rating: defaultValues?.minimum_rating || 'All',
+      sortByOptionId: sortByOptionId?.id || 'date_added',
     },
     onSubmit: () => {
       return;
@@ -56,21 +67,21 @@ export const BrowseMoviesForm = ({ onChange }: BrowseMoviesFormProps) => {
       }
     }
 
-    const updatedValues = {
+    const values = {
       ...formik.values,
       ...updatedValue,
     };
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    delete updatedValues.sortByOptionId;
+    delete values.sortByOptionId;
 
     if (debounceTimeoutRef.current) {
       clearTimeout(debounceTimeoutRef.current);
     }
 
     debounceTimeoutRef.current = setTimeout(() => {
-      onChange(updatedValues);
+      onChange(values);
     }, BROWSE_MOVIES_FORM_DEBOUNCE_TIMEOUT);
   };
 
