@@ -88,13 +88,13 @@ export function Component() {
                 <Stack direction="row" spacing={1}>
                   <DownloadIcon color="info" />
                   <Typography>
-                    {formatNumber(movieDetails.download_count)} Downloads
+                    {formatNumber(movieDetails.download_count || 0)} Downloads
                   </Typography>
                 </Stack>
                 <Stack direction="row" spacing={1}>
                   <FavoriteIcon color="error" />
                   <Typography>
-                    {formatNumber(movieDetails.like_count)} Likes
+                    {formatNumber(movieDetails.like_count || 0)} Likes
                   </Typography>
                 </Stack>
               </Stack>
